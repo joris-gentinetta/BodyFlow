@@ -11,11 +11,11 @@ The code from the original works have been refactored in a way that make them ea
 The library outputs a csv with the 2d and 3d landmarks. They can be visualized using the [visualization](src/pose-estimation/common_pose/visualization.py) script.
 
 ## Installation
-The code has been tested with **Python 3.7**. Other Python versions may work, but they have not been tested.
+The code has been tested with **Python 3.8**. Other Python versions may work, but they have not been tested.
 
 We start by creating a conda environment with the following command:
 
-`$ conda create -n misiones-env python=3.7`
+`$ conda create -n misiones-env python=3.8`
 
 `$ conda activate misiones-env`
 

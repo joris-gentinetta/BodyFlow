@@ -172,7 +172,8 @@ def pose_model_load(cfg_file, model_dir):
     if torch.cuda.is_available():
         model = model.cuda()
 
-    state_dict = torch.load(cfg.OUTPUT_DIR)
+    map_location = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    state_dict = torch.load(cfg.OUTPUT_DIR, map_location=map_location)
     from collections import OrderedDict
     new_state_dict = OrderedDict()
     for k, v in state_dict.items():

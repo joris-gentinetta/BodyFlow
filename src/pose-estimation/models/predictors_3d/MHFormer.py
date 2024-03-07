@@ -42,9 +42,11 @@ class MHFormer(HPE3D):
         args_3d['pad'] = (args_3d['frames'] - 1) // 2
         model_path = os.path.join('models', f"mhformer_model_{window_length}.pth")
        
-        self.model = Model(args_3d).cuda()
+        self.model = Model(args_3d)
+
         model_dict = self.model.state_dict()
-        pre_dict = torch.load(model_path)
+        map_location = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        pre_dict = torch.load(model_path, map_location=map_location)
         for name, _ in model_dict.items():
             model_dict[name] = pre_dict[name]
         self.model.load_state_dict(model_dict)
@@ -156,7 +158,7 @@ class MHFormer(HPE3D):
         
         input_2D = input_2D[np.newaxis, :, :, :, :]
 
-        input_2D = torch.from_numpy(input_2D.astype('float32')).cuda()
+        input_2D = torch.from_numpy(input_2D.astype('float32'))
 
         if torch.cuda.is_available():
             input_2D = input_2D.cuda()
