@@ -29,18 +29,25 @@ import mediapipe as mp
 class Mediapipe2D(HPE2D):
     def __init__(self):
         self._mp_pose = mp.solutions.pose
-        self._pose = self._mp_pose.Pose(
-            model_complexity=0,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5)
+        # self._pose = self._mp_pose.Pose(
+        #     model_complexity=0,
+        #     min_detection_confidence=0.5,
+        #     min_tracking_confidence=0.5)
+
+        base_options = mp.tasks.BaseOptions(model_asset_path='models/mediapipe/pose_landmarker.task')
+        options = mp.tasks.vision.PoseLandmarkerOptions(
+            base_options=base_options,
+            output_segmentation_masks=True)
+        self.body_model = mp.tasks.vision.PoseLandmarker.create_from_options(options)
 
     def get_frame_keypoints(self, frame):
         RGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        RGB = mp.Image(image_format=mp.ImageFormat.SRGB, data=RGB)
         # process the RGB frame to get the result
-        results = self._pose.process(RGB)
+        results = self.body_model.detect(RGB)
         if results.pose_landmarks is None:
             return None
-        landmarks = results.pose_landmarks.landmark
+        landmarks = results.pose_landmarks[0]
 
         # https://google.github.io/mediapipe/solutions/pose.html#pose-landmark-model-blazepose-ghum-3d
         frame_keypoints_2d = {

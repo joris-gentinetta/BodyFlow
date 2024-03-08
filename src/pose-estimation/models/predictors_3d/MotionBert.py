@@ -52,13 +52,16 @@ class MotionBert(HPE3D):
             model_params = model_params + parameter.numel()
         logging.info(f'Trainable parameter count: {model_params}')
         if torch.cuda.is_available():
-            self.model= nn.DataParallel(self.model)
-            self.model =  self.model.cuda()
+            self.model = nn.DataParallel(self.model)
+            self.model = self.model.cuda()
         
-        chk_filename='models/best_epoch.bin'
+        chk_filename='models/motionbert/FT_MB_lite_MB_ft_h36m_global_lite.bin'
         logging.info(f'Loading checkpoint ´{chk_filename}')
         checkpoint = torch.load(chk_filename, map_location=lambda storage, loc: storage)
-        self.model.load_state_dict(checkpoint['model_pos'], strict=True)
+        state_dict = checkpoint['model_pos']
+        state_dict = {k.partition('module.')[2]: v for k, v in state_dict.items() if k.startswith('module.')}
+
+        self.model.load_state_dict(state_dict, strict=True)
         
         logging.info('Testing')
         self.model.eval()         
@@ -170,7 +173,7 @@ class MotionBert(HPE3D):
         test_confidence = np.ones(input_2D.astype('float32').shape)[:,:,:,:,0:1] #MOTIONBERT CUSTOM ( we need confidence from 2d inference )
         input_2D = np.concatenate((input_2D.astype('float32'), test_confidence), axis=4)  # [BS, N, 17, 3]        
         
-        input_2D = torch.from_numpy(input_2D.astype('float32')).cuda()
+        input_2D = torch.from_numpy(input_2D.astype('float32'))
 
         if torch.cuda.is_available():
             input_2D = input_2D.cuda()
