@@ -29,10 +29,6 @@ import mediapipe as mp
 class Mediapipe2D(HPE2D):
     def __init__(self):
         self._mp_pose = mp.solutions.pose
-        # self._pose = self._mp_pose.Pose(
-        #     model_complexity=0,
-        #     min_detection_confidence=0.5,
-        #     min_tracking_confidence=0.5)
 
         base_options = mp.tasks.BaseOptions(model_asset_path='models/mediapipe/pose_landmarker.task')
         options = mp.tasks.vision.PoseLandmarkerOptions(

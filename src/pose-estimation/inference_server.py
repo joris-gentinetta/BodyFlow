@@ -204,7 +204,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--predictor_2d', type=str, default='cpn', help='2D Predictor: [dummy2d, mediapipe2d, cpn, lightweight]')
     parser.add_argument('--predictor_3d', type=str, default='mhformer', help='3D Predictor: [dummy3d, mhformer] if downloaded: [videopose, motionbert, mixste]')
-    parser.add_argument('--gpu', type=str, default='0', help='Id of the GPU. Empty string if CPU')
+    parser.add_argument('--gpu', type=str, default='', help='Id of the GPU. Empty string if CPU')
     parser.add_argument('--infinite_loop', action='store_true')
     parser.add_argument('--port', type=int, default=-1, help='Port the machine where the inference server is running. The Unity server will connect to this Port. -1 and pose will not be sent.')
 
@@ -212,7 +212,7 @@ if __name__ == "__main__":
     parser.add_argument('--input', default='video', choices=['video', 'pictures', 'cam'], help='Way in which the entry is read')
     
     # Video 
-    parser.add_argument('--video_path', type=str, default='data/GX010860.MP4', help='Id of the GPU. Empty string if CPU')
+    parser.add_argument('--video_path', type=str, default='', help='Id of the GPU. Empty string if CPU')
 
     # Pictures
     parser.add_argument('--pictures_path', type=str, default='data/demos/single_image', help='Path of the pictures to estimate the pose')
