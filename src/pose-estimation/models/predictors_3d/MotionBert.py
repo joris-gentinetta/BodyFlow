@@ -186,9 +186,10 @@ class MotionBert(HPE3D):
         output_3D_flip[:, :, joints_left + joints_right, :] = output_3D_flip[:, :, joints_right + joints_left, :] 
 
         output_3D = (output_3D_non_flip + output_3D_flip) / 2
-      
+
+        # todo why go through all but only used
         output_3D = output_3D[0:,(self._args_3d['frames'] - 1) // 2].unsqueeze(1) 
-        output_3D[:, :, 0, :] = 0
+        # output_3D[:, :, 0, :] = 0 #todo this caused the stuck butt
         post_out = output_3D[0, 0].cpu().detach().numpy()
         return self.pose_to_landmarks(post_out,  bodyLandmarks2d, timestamp)
     

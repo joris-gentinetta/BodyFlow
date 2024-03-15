@@ -59,6 +59,7 @@ Available 3d predictors are:
 They are indicated in the following form:
 
 `$ python src/pose-estimation/inference_server.py --predictor_2d {mediapipe2d, cpn, lightweight} --predictor_3d {mhformer, motionbert, mixste}`
+`$ python src/pose-estimation/inference_server.py --predictor_2d mediapipe2d --predictor_3d motionbert --input video --video_path /Users/jg/projects/biomech/BodyFlow/data/input/test_5.mov`
 
 For example, to run CPN and MHFormer:
 

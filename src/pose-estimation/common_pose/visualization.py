@@ -165,7 +165,7 @@ class Visualization():
         self.ax1=fig.add_subplot(spec[1], projection='3d')
         self.ax1.set_title(f'3D ({log_filename.split("_")[2]})', fontweight='bold')
         self.ax1.set_box_aspect([1,1,1])
-        self.ax1.view_init(elev = 12, azim = -0) # For better visualization
+        self.ax1.view_init(elev = 12, azim = -90) # For better visualization
         self.ax1.set_xticklabels([])
         self.ax1.set_yticklabels([])
         self.ax1.set_zticklabels([])
